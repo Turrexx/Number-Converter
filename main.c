@@ -63,8 +63,17 @@ int main() {
 
     
     printf("--------------------------------\n");
-    printf("Welcome to the binary converter!\n");
+    printf("Welcome to the value converter!\n");
     printf("--------------------------------\n");
+    printf("Please select an option!\n");
+    printf("--------------------------------\n");
+    printf("(1) Decimal to Binary\n");
+    printf("(2) Decimal to Binary\n");
+    printf("(3) Decimal to Binary\n");
+    printf("(4) Decimal to Binary\n");
+    printf("--------------------------------\n");
+
+
 
     int value;
     char line[100];
