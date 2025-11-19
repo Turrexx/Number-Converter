@@ -75,15 +75,18 @@ int main() {
     printf("(6) Binary to Hexadecimal\n");
     printf("--------------------------------\n");
     
-
+    
+    int selection;
+    char line[100];
     // Option selection for type of conversion.
     while (1) {
-        
-        int selection;
         printf("Select 1, 2, 3, etc. : ");
-        
+	if (!fgets(line, sizeof(line), stdin)) {
+            //fgets failed (EOF or error)                                                             printf("Error reading input.\n");
+            return 1;
+        }
         // Try to parse integer
-        if (sscanf(line, "%d", &selection) == 1 && selection >= 1 selection <=6) {
+        if (sscanf(line, "%d", &selection) == 1 && selection >= 1 && selection <=6) {
             break; // success
         }
         //failed to parse a proper selection
@@ -118,7 +121,6 @@ int main() {
 
     //Receive input for conversion
     int value;
-    char line[100];
 
     while (1) {
         printf("Please enter a value: ");
