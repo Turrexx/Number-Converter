@@ -68,13 +68,55 @@ int main() {
     printf("Please select an option!\n");
     printf("--------------------------------\n");
     printf("(1) Decimal to Binary\n");
-    printf("(2) Decimal to Binary\n");
-    printf("(3) Decimal to Binary\n");
-    printf("(4) Decimal to Binary\n");
+    printf("(2) Decimal to Hexadecimal\n");
+    printf("(3) Hexadecimal to Binary\n");
+    printf("(4) Hexadecimal to Decimal\n");
+    printf("(5) Binary to Decimal\n");
+    printf("(6) Binary to Hexadecimal\n");
     printf("--------------------------------\n");
+    
+
+    // Option selection for type of conversion.
+    while (1) {
+        
+        int selection;
+        printf("Select 1, 2, 3, etc. : ");
+        
+        // Try to parse integer
+        if (sscanf(line, "%d", &selection) == 1 && selection >= 1 selection <=6) {
+            break; // success
+        }
+        //failed to parse a proper selection
+
+        //Clear Screen
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+
+
+        //Re-display menu
+        printf("--------------------------------\n");
+        printf("Welcome to the value converter!\n");
+        printf("--------------------------------\n");
+        printf("Please select an option!\n");
+        printf("--------------------------------\n");
+        printf("(1) Decimal to Binary\n");
+        printf("(2) Decimal to Hexadecimal\n");
+        printf("(3) Hexadecimal to Binary\n");
+        printf("(4) Hexadecimal to Decimal\n");
+        printf("(5) Binary to Decimal\n");
+        printf("(6) Binary to Hexadecimal\n");
+        printf("--------------------------------\n");
+        //Display error message
+        printf("Invalid input. Please enter number 1-6: ");
+    }
 
 
 
+
+    //Receive input for conversion
     int value;
     char line[100];
 
