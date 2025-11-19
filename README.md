@@ -1,5 +1,6 @@
 # Number-Converter
 
+Hello!
 This converter is still limited in function.  
 It is my first official practice project where I use GitHub to track progress.
 
