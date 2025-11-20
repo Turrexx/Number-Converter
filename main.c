@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+//
 void dec_to_binary(int n) {
     int bits[32];
     int i = 0;
@@ -115,12 +115,39 @@ int main() {
         //Display error message
         printf("Invalid input. Please enter number 1-6: ");
     }
+    int value;
+    //Option 1
+    if (selection == 1) {
+        //Clear screen
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+        //Print decimal to binary menu
+        while (1) {
+  	    printf("--------------------------------\n");
+            printf("------Decimal to binary---------\n");
+            printf("--------------------------------\n");
+            printf("Please enter a decimal value.");
+            printf("--------------------------------\n");
+	    //scan for value input.
+   	    if (!fgets(line, sizeof(line), stdin)) {
+            //fgets failed (EOF or error)
+            printf("Error reading input.\n");
+            return 1;
+            }
 
+            // Try to parse integer
+            if (sscanf(line, "%d", &value) == 1) {
+                break; // success
+            }
 
+        }
+    }
 
 
     //Receive input for conversion
-    int value;
 
     while (1) {
         printf("Please enter a value: ");
