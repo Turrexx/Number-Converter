@@ -128,7 +128,7 @@ int main() {
                 return 1;
                 }
             // Try to parse integer
-            if (sscanf(line, " %d %c", &value) == 1) {
+            if (sscanf(line, " %d %c", &value, &extra) == 1) {
                 break; // success
             }
             
