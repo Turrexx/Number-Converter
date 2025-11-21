@@ -11,6 +11,10 @@ It is my first official practice project where I use GitHub to track progress.
   Currently validates that user input is between 1–6 before asking for conversion details.
 - **11/19** - Completed option 1 functionality.
   Option 1 fully functional and clear of known errors.  Remaining options just terminate program for now.
+- **11/20** - Option 2 functionality and clean up.
+  Options 1 & 2 fully work now. The remaining options will just exit program.  
+  Cleaned up code a bit with new functions (clear_screen())
+
 
 ---
 ## Future Plans
