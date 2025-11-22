@@ -30,7 +30,7 @@ void print_main_menu() {
 
 void print_menu(const char *from, const char *to) {
     printf("--------------------------------\n");
-    printf("----- %s to %s-----\n", from, to);
+    printf("----- %s to %s -----\n", from, to);
     printf("--------------------------------\n");
     printf("--Please enter a %s value.--\n", from);
     printf("--------------------------------\n");
@@ -90,7 +90,7 @@ void dec_to_hexadecimal(int n) {
 }
 
 // Option 3
-int hex_to_binary(const char *hex) {
+void hex_to_binary(const char *hex) {
     char binary[512] = "";
     
     // hex to bin lookup table
@@ -117,15 +117,14 @@ int hex_to_binary(const char *hex) {
             index = 10 + (c - 'A');
         else {
             printf("Invalid hex digit: %c\n", c);
-            return 1;
+            return;
         }
         // For each iteration, add new binary string obtained from lookup table index
         strcat(binary, hex_to_bin[index]);
     }
     // Then print the entire string
-    printf("Hex: %s\n", hex);
-    printf("Binary: %s\n", binary);
-    return 0;
+    
+    printf("%s\n", binary);
 }
 
 // Option 4
@@ -173,8 +172,10 @@ int main() {
     int value = 0;
     char extra; // For checking invalid decimal input (example = 134f)
 
-    // Option 1 - D-B
-    if (selection == 1) {
+
+    switch (selection) {
+
+    case 1: {
         clear_screen();
         // Print decimal to binary menu
         print_menu("Decimal", "Binary");
@@ -207,13 +208,11 @@ int main() {
         printf("Binary: ");
         dec_to_binary(value);
         printf("--------------------------------\n");
-
+        break;
     }
-    
-    // Option 2 - D-H
-    if (selection == 2) {
-        clear_screen();
 
+    case 2: {
+        clear_screen();
         // Print decimal to hex menu
         print_menu("Decimal", "Hexadecimal");
         // Check for proper input
@@ -245,10 +244,10 @@ int main() {
         printf("Hexadecimal: ");
         dec_to_hexadecimal(value);
         printf("--------------------------------\n");
+        break;
     }
-    
-    // Option 3 - H-B
-    if (selection == 3) {
+
+    case 3: {
         clear_screen();
         char hex_input[100];
 
@@ -270,8 +269,7 @@ int main() {
             // Reprint Menu
             printf("Invalid input, please enter a hex value.\n");
             print_menu("Hexadecimal", "Binary");
-        
-    }
+        }
         clear_screen();
         // Print result menu
         printf("--------------------------------\n");
@@ -280,32 +278,37 @@ int main() {
         printf("Binary: ");
         hex_to_binary(hex_input);
         printf("--------------------------------\n");
-}
-    
-    // Option 4 - H-D
-    if (selection == 4) {
+        break;
+    }
+
+    case 4: {
         clear_screen();
 
         // Print hex to decimal menu
         print_menu("Hexadecimal", "Decimal");
+        break;
     }
-    
-    // Option 5 - B-D
-    if (selection == 5) {
+
+    case 5: {
         clear_screen();
 
         // Print binary to decimal menu
         print_menu("Binary", "Decimal");
+        break;
     }
-    
-    // Option 6 - B-H
-    if (selection == 6) {
+
+    case 6: {
         clear_screen();
 
         // Print decimal to hex menu
-        print_menu("Binary", "Decimal");
+        print_menu("Binary", "Hexadecimal");
+        break;
     }
 
+    default: {
+        printf("Invalid selection.\n");
+    }
+}
 
 
     return 0;

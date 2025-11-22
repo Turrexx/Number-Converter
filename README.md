@@ -16,6 +16,7 @@ It is my first official practice project where I use GitHub to track progress.
   Cleaned up code a bit with new functions (clear_screen())
 - **11/22** - Added Hex to bin functionality.
   Added menu printing function.  
+  Added Case switch for main function for better readability.
 
 
 ---
