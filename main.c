@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <string.h>
+
 
 void clear_screen() {
 // clear screen
@@ -78,8 +81,42 @@ void dec_to_hexadecimal(int n) {
 }
 
 // Option 3
-void hex_to_binary(int n) {
+int hex_to_binary(const char *hex) {
+    char binary[512] = "";
+    
+    // hex to bin lookup table
+    const char *hex_to_bin[] = {
+        "0000", "0001", "0010", "0011",
+        "0100", "0101", "0110", "0111",
+        "1000", "1001", "1010", "1011",
+        "1100", "1101", "1110", "1111"
+    };
 
+    // Loop over hex input
+    int len = strlen(hex);
+    for (int i = 0; i < len; i++) {
+        char c = toupper(hex[i]);
+        int index;
+        
+        // If number, subract ascii value by 0's ascii value
+        // to get index
+        if (c >= '0' && c <= '9')
+            index = c - '0';
+        // If letter, subtract by A's ascii value
+        // and add 10 to account for hex value     
+        else if (c >= 'A' && c <= 'F')
+            index = 10 + (c - 'A');
+        else {
+            printf("Invalid hex digit: %c\n", c);
+            return 1;
+        }
+        // For each iteration, add new binary string obtained from lookup table index
+        strcat(binary, hex_to_bin[index]);
+    }
+    // Then print the entire string
+    printf("Hex: %s\n", hex);
+    printf("Binary: %s\n", binary);
+    return 0;
 }
 
 // Option 4
@@ -226,6 +263,7 @@ int main() {
     // Option 3 - H-B
     if (selection == 3) {
         clear_screen();
+        char hex_input[100];
 
         // Print hex to binary menu
         printf("--------------------------------\n");
@@ -234,9 +272,39 @@ int main() {
         printf("Please enter a hex value.\n");
         printf("--------------------------------\n");
         printf("Value: ");
-        printf("--------------------------------\n");
-        printf("Hexadecimal to Binary will go here.\n  Program will exit.");
+        while (1) {
+            //scan for hex input.
+            if (!fgets(line, sizeof(line), stdin)) {
+                //fgets failed (EOF or error)
+                printf("Error reading input.\n");
+                return 1;
+                }
+            // Read string
+            if (sscanf(line, "%s", hex_input) == 1) {
+                break; // success, will now print result screen
+            }
+            // failed to parse integer
+            clear_screen();
+            // Reprint Menu
+            printf("--------------------------------\n");
+            printf("------Hexadecimal to Binary---------\n");
+            printf("--------------------------------\n");
+            printf("Please enter a hex value.\n");
+            printf("--------------------------------\n");
+            // Print error message
+            printf("Invalid input, please enter a hex value.\n");
+            printf("Value: ");
+        
     }
+        clear_screen();
+        // Print result menu
+        printf("--------------------------------\n");
+        printf("You entered value: %s\n", hex_input);
+        printf("--------------------------------\n");
+        printf("Binary: ");
+        hex_to_binary(hex_input);
+        printf("--------------------------------\n");
+}
     
     // Option 4 - H-D
     if (selection == 4) {
@@ -283,7 +351,7 @@ int main() {
         printf("Binary to Hexadecimal will go here.\n  Program will exit.");
     }
 
-  
+
 
     return 0;
 }

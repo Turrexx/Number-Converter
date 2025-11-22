@@ -14,6 +14,7 @@ It is my first official practice project where I use GitHub to track progress.
 - **11/20** - Option 2 functionality and clean up.
   Options 1 & 2 fully work now. The remaining options will just exit program.  
   Cleaned up code a bit with new functions (clear_screen())
+- **11/22** - Added Hex to bin functionality.
 
 
 ---
