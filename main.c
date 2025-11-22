@@ -28,6 +28,15 @@ void print_main_menu() {
     printf("--------------------------------\n");
 }
 
+void print_menu(const char *from, const char *to) {
+    printf("--------------------------------\n");
+    printf("----- %s to %s-----\n", from, to);
+    printf("--------------------------------\n");
+    printf("--Please enter a %s value.--\n", from);
+    printf("--------------------------------\n");
+    printf("Value: ");
+}
+
 // Option 1
 void dec_to_binary(int n) {
     int bits[32];
@@ -168,12 +177,7 @@ int main() {
     if (selection == 1) {
         clear_screen();
         // Print decimal to binary menu
-        printf("--------------------------------\n");
-        printf("------Decimal to binary---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a decimal value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
+        print_menu("Decimal", "Binary");
         // Check for proper input
         while (1) {
             //scan for value input.
@@ -190,14 +194,8 @@ int main() {
             // failed to parse integer
             clear_screen();
             // Reprint Menu
-            printf("--------------------------------\n");
-            printf("------Decimal to binary---------\n");
-            printf("--------------------------------\n");
-            printf("Please enter a decimal value.\n");
-            printf("--------------------------------\n");
-            // Print error message
-            printf("Invalid input, please enter only a decimal value.\n");
-            printf("Value: ");
+            printf("***Invalid input, please enter only a decimal value.***\n");
+            print_menu("Decimal", "Binary");
         }
     
         // Proper input found - plug value into function
@@ -217,12 +215,7 @@ int main() {
         clear_screen();
 
         // Print decimal to hex menu
-        printf("--------------------------------\n");
-        printf("------Decimal to Hexadecimal---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a decimal value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
+        print_menu("Decimal", "Hexadecimal");
         // Check for proper input
         while (1) {
             //scan for value input.
@@ -239,14 +232,8 @@ int main() {
             // failed to parse integer
             clear_screen();
             // Reprint Menu
-            printf("--------------------------------\n");
-            printf("------Decimal to Hexadecimal---------\n");
-            printf("--------------------------------\n");
-            printf("Please enter a decimal value.\n");
-            printf("--------------------------------\n");
-            // Print error message
             printf("Invalid input, please enter only a decimal value.\n");
-            printf("Value: ");
+            print_menu("Decimal", "Hexadecimal");
         }
     
         // Proper input found - plug value into function
@@ -266,12 +253,7 @@ int main() {
         char hex_input[100];
 
         // Print hex to binary menu
-        printf("--------------------------------\n");
-        printf("------Hexadecimal to Binary---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a hex value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
+        print_menu("Hexadecimal", "Binary");
         while (1) {
             //scan for hex input.
             if (!fgets(line, sizeof(line), stdin)) {
@@ -286,14 +268,8 @@ int main() {
             // failed to parse integer
             clear_screen();
             // Reprint Menu
-            printf("--------------------------------\n");
-            printf("------Hexadecimal to Binary---------\n");
-            printf("--------------------------------\n");
-            printf("Please enter a hex value.\n");
-            printf("--------------------------------\n");
-            // Print error message
             printf("Invalid input, please enter a hex value.\n");
-            printf("Value: ");
+            print_menu("Hexadecimal", "Binary");
         
     }
         clear_screen();
@@ -311,14 +287,7 @@ int main() {
         clear_screen();
 
         // Print hex to decimal menu
-        printf("--------------------------------\n");
-        printf("------Hexadecimal to Decimal---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a hex value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
-        printf("--------------------------------\n");
-        printf("Hexadecimal to Decimal will go here.\n  Program will exit.");
+        print_menu("Hexadecimal", "Decimal");
     }
     
     // Option 5 - B-D
@@ -326,14 +295,7 @@ int main() {
         clear_screen();
 
         // Print binary to decimal menu
-        printf("--------------------------------\n");
-        printf("------Binary to Decimal---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a binary value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
-        printf("--------------------------------\n");
-        printf("Binary to Decimal will go here.\n  Program will exit.");
+        print_menu("Binary", "Decimal");
     }
     
     // Option 6 - B-H
@@ -341,14 +303,7 @@ int main() {
         clear_screen();
 
         // Print decimal to hex menu
-        printf("--------------------------------\n");
-        printf("------Binary to Hexadecimal---------\n");
-        printf("--------------------------------\n");
-        printf("Please enter a binary value.\n");
-        printf("--------------------------------\n");
-        printf("Value: ");
-        printf("--------------------------------\n");
-        printf("Binary to Hexadecimal will go here.\n  Program will exit.");
+        print_menu("Binary", "Decimal");
     }
 
 
