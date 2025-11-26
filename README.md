@@ -17,7 +17,8 @@ It is my first official practice project where I use GitHub to track progress.
 - **11/22** - Added Hex to bin functionality.
   Added menu printing function.  
   Added Case switch for main function for better readability.
-
+- **11/25** - Added error checking for hex input. 
+  Program would previously just quit if invalid - now re-prompts.
 
 ---
 ## Future Plans

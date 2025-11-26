@@ -186,7 +186,7 @@ int main() {
                 //fgets failed (EOF or error)
                 printf("Error reading input.\n");
                 return 1;
-                }
+            }
             // Try to parse integer
             if (sscanf(line, " %d %c", &value, &extra) == 1) {
                 break; // success, will now print result screen
@@ -222,7 +222,7 @@ int main() {
                 //fgets failed (EOF or error)
                 printf("Error reading input.\n");
                 return 1;
-                }
+            }
             // Try to parse integer
             if (sscanf(line, " %d %c", &value, &extra) == 1) {
                 break; // success, will now print result screen
@@ -259,10 +259,21 @@ int main() {
                 //fgets failed (EOF or error)
                 printf("Error reading input.\n");
                 return 1;
-                }
+            }
             // Read string
-            if (sscanf(line, "%s", hex_input) == 1) {
-                break; // success, will now print result screen
+            if (sscanf(line, "%99s", hex_input) == 1) {
+                int valid = 1;
+		// Check for valid hex value
+		for (int i = 0; hex_input[i] != '\0'; i++) {
+			if (!isxdigit((unsigned char)hex_input[i])) {
+			    valid = 0;
+			    break;
+			}
+		}
+	        if (valid) {
+		    break;
+
+		}
             }
             // failed to parse integer
             clear_screen();
