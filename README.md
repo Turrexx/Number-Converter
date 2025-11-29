@@ -19,7 +19,7 @@ It is my first official practice project where I use GitHub to track progress.
   Added Case switch for main function for better readability.
 - **11/25** - Added error checking for hex input. 
   Program would previously just quit if invalid - now re-prompts.
-
+- **11/29** - Added new functions for obtaining input and printing menus.  General code improvements.
 ---
 ## Future Plans
 

@@ -32,9 +32,74 @@ void print_menu(const char *from, const char *to) {
     printf("--------------------------------\n");
     printf("----- %s to %s -----\n", from, to);
     printf("--------------------------------\n");
-    printf("--Please enter a %s value.--\n", from);
+}
+
+void print_result(const char *from, const char*to, char *input) {
     printf("--------------------------------\n");
-    printf("Value: ");
+    printf("----- %s to %s -----\n", from, to);
+    printf("--------------------------------\n");
+    printf("You entered value: %s\n", input);
+    printf("--------------------------------\n");
+    printf("%s: ", to);
+}
+
+int get_dec_input(const char *from, const char *to) {
+    char line[100];
+    int dec_input;
+    char extra; // For checking invalid decimal input (example = 134f)
+    
+
+    while (1) {
+        printf("Please enter a decimal value: ");
+
+        if (!fgets(line, sizeof(line), stdin)) {
+            printf("Input error - Please try again.");
+            clearerr(stdin);
+            continue;
+        }
+        // CHeck for valid input
+        if (sscanf(line, " %d %c", &dec_input, &extra) == 1) {
+            return dec_input;
+        }
+        clear_screen();
+        print_menu(from, to);
+        printf("Invalid input.\n");
+
+    }
+
+}
+
+void get_hex_input(char *input, const char *from, const char *to) {
+    char line[100];
+    
+    while (1) {
+        printf("Please enter a hex value: ");
+
+        if (!fgets(line, sizeof(line), stdin)) {
+            printf("Input error - Please try again.");
+            clearerr(stdin);
+            continue;
+        }
+        // Check for valid input
+        if (sscanf(line, "%99s", input) == 1) {
+            int valid = 1; // valid by default
+
+            for (int i = 0; input[i] != '\0'; i++) {
+                if (!isxdigit((unsigned char)input[i])) { // if not 0-9A-F
+                    valid = 0;  // set to invalid
+                    break;
+                }
+            }
+            if (valid) {
+                return;
+            }
+        }
+        clear_screen();
+        print_menu(from, to);
+        printf("Invalid input.\n");
+
+    }
+
 }
 
 // Option 1
@@ -146,6 +211,7 @@ void binary_to_hex(int n) {
 
 int main() {
     int selection;  // Selection of what type of conversion
+    char extra; // For checking invalid decimal input (example = 134f)
     char line[100];  // To scan the input
     clear_screen();
     print_main_menu();
@@ -154,12 +220,12 @@ int main() {
     // Get input for conversion type
     while (1) {
 	if (!fgets(line, sizeof(line), stdin)) {
-        //fgets failed (EOF or error)                                                             
-        printf("Error reading input.\n");
-        return 1;
-        }
+            printf("Input error - Please try again.");
+            clearerr(stdin);
+            continue;
+    }
         // Try to parse integer
-        if (sscanf(line, " %d", &selection) == 1 && selection >= 1 && selection <=6) {
+        if (sscanf(line, " %d %s", &selection, &extra) == 1 && selection >= 1 && selection <=6) {
             break; // success
         }
         //failed to parse a proper selection
@@ -169,8 +235,7 @@ int main() {
         //Display error message
         printf("Invalid input. Please enter number 1-6: ");
     }
-    int value = 0;
-    char extra; // For checking invalid decimal input (example = 134f)
+    
 
 
     switch (selection) {
@@ -179,34 +244,17 @@ int main() {
         clear_screen();
         // Print decimal to binary menu
         print_menu("Decimal", "Binary");
-        // Check for proper input
-        while (1) {
-            //scan for value input.
-            if (!fgets(line, sizeof(line), stdin)) {
-                //fgets failed (EOF or error)
-                printf("Error reading input.\n");
-                return 1;
-            }
-            // Try to parse integer
-            if (sscanf(line, " %d %c", &value, &extra) == 1) {
-                break; // success, will now print result screen
-            }
-            
-            // failed to parse integer
-            clear_screen();
-            // Reprint Menu
-            printf("***Invalid input, please enter only a decimal value.***\n");
-            print_menu("Decimal", "Binary");
-        }
-    
+
+        // Get decimal input
+        int dec_value = get_dec_input("Decimal", "Binary");
+        
         // Proper input found - plug value into function
         clear_screen();
         // Print result menu
-        printf("--------------------------------\n");
-        printf("You entered value: %d\n", value);
-        printf("--------------------------------\n");
-        printf("Binary: ");
-        dec_to_binary(value);
+        char input_str[50];
+        sprintf(input_str, "%d", dec_value);  //convert to string for result printing.
+        print_result("Decimal", "Binary", input_str);
+        dec_to_binary(dec_value);
         printf("--------------------------------\n");
         break;
     }
@@ -215,34 +263,17 @@ int main() {
         clear_screen();
         // Print decimal to hex menu
         print_menu("Decimal", "Hexadecimal");
-        // Check for proper input
-        while (1) {
-            //scan for value input.
-            if (!fgets(line, sizeof(line), stdin)) {
-                //fgets failed (EOF or error)
-                printf("Error reading input.\n");
-                return 1;
-            }
-            // Try to parse integer
-            if (sscanf(line, " %d %c", &value, &extra) == 1) {
-                break; // success, will now print result screen
-            }
-            
-            // failed to parse integer
-            clear_screen();
-            // Reprint Menu
-            printf("Invalid input, please enter only a decimal value.\n");
-            print_menu("Decimal", "Hexadecimal");
-        }
-    
+        
+        // Get decimal input
+        int dec_value = get_dec_input("Decimal", "Hexadecimal");
+        
         // Proper input found - plug value into function
         clear_screen();
         // Print result menu
-        printf("--------------------------------\n");
-        printf("You entered value: %d\n", value);
-        printf("--------------------------------\n");
-        printf("Hexadecimal: ");
-        dec_to_hexadecimal(value);
+        char input_str[50];
+        sprintf(input_str, "%d", dec_value);
+        print_result("Decimal", "Hexadecimal", input_str);
+        dec_to_hexadecimal(dec_value);
         printf("--------------------------------\n");
         break;
     }
@@ -253,40 +284,10 @@ int main() {
 
         // Print hex to binary menu
         print_menu("Hexadecimal", "Binary");
-        while (1) {
-            //scan for hex input.
-            if (!fgets(line, sizeof(line), stdin)) {
-                //fgets failed (EOF or error)
-                printf("Error reading input.\n");
-                return 1;
-            }
-            // Read string
-            if (sscanf(line, "%99s", hex_input) == 1) {
-                int valid = 1;
-		// Check for valid hex value
-		for (int i = 0; hex_input[i] != '\0'; i++) {
-			if (!isxdigit((unsigned char)hex_input[i])) {
-			    valid = 0;
-			    break;
-			}
-		}
-	        if (valid) {
-		    break;
-
-		}
-            }
-            // failed to parse integer
-            clear_screen();
-            // Reprint Menu
-            printf("Invalid input, please enter a hex value.\n");
-            print_menu("Hexadecimal", "Binary");
-        }
+        get_hex_input(hex_input, "Hexadecimal", "Binary");
         clear_screen();
         // Print result menu
-        printf("--------------------------------\n");
-        printf("You entered value: %s\n", hex_input);
-        printf("--------------------------------\n");
-        printf("Binary: ");
+        print_result("Hexadecimal", "Binary", hex_input);
         hex_to_binary(hex_input);
         printf("--------------------------------\n");
         break;
