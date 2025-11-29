@@ -20,11 +20,11 @@ It is my first official practice project where I use GitHub to track progress.
 - **11/25** - Added error checking for hex input. 
   Program would previously just quit if invalid - now re-prompts.
 - **11/29** - Added new functions for obtaining input and printing menus.  General code improvements.
+- **11/29** - Finished all 6 options.  Program is basically complete.  May just need to add some cosmetic changes.
 ---
 ## Future Plans
 
-- Add remaining conversion functions.
-- Complete functionality for remaining options.
+- Cleanup code.  Make menu look nicer.
 
 ---
 

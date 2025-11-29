@@ -102,6 +102,37 @@ void get_hex_input(char *input, const char *from, const char *to) {
 
 }
 
+void get_bin_input(char *input, const char *from, const char*to) {
+    char line[100];
+
+    while (1) {
+        printf("Please enter a binary value: ");
+
+        if (!fgets(line, sizeof(line), stdin)) {
+            printf("Input error - Please try again.");
+            clearerr(stdin);
+            continue;
+        }
+        //check for valid input
+        if (sscanf(line, "%99s", input) == 1) {
+            int valid = 1; // assume valid by default
+
+            for (int i = 0; input[i] != '\0'; i++) {
+                if (input[i] != '0' && input[i] != '1') {
+                    valid = 0; // set to invalid
+                    break;
+                }
+            }
+            if (valid) {
+                break; 
+            }
+        }
+        clear_screen();
+        print_menu(from, to);
+        printf("Invalid input.\n");
+    }
+}
+
 // Option 1
 void dec_to_binary(int n) {
     int bits[32];
@@ -193,17 +224,68 @@ void hex_to_binary(const char *hex) {
 }
 
 // Option 4
-void hex_to_decimal(int n) {
+void hex_to_decimal(const char *hex) {
+    int len = strlen(hex);
+    long long result = 0;
+    long long base = 1;
+    
+
+    for (int i = len -1; i >= 0; i--) {
+        char c = toupper(hex[i]);
+        int value;
+        if (c >= '0' && c <= '9') {
+            value = c - '0';
+        }
+        else if (c >= 'A' && c <= 'F') {
+            value = c - 'A' + 10;
+        }
+        else {
+            printf("Invalid hex digit: %c\n", c);
+            return;
+        }
+        result += value * base;
+        base *= 16;
+        
+    }
+
+    printf("%lld\n", result);
+
+
 
 }
 
 // Option 5
-void binary_to_decimal(int n) {
+void binary_to_decimal(const char *bin) {
+    int len = strlen(bin);
+    long long result = 0;
+    long long base = 1; 
+
+    for (int i = len -1; i >= 0; i--) {
+        int value = bin[i];
+        value -= '0';
+        result += value * base;
+        base *= 2;
+    } 
+
+    printf("%d\n",result);
+    
 
 }
 
 // Option 6
-void binary_to_hex(int n) {
+void binary_to_hex(const char *bin) {
+    // convert to decimal
+    int len = strlen(bin);
+    int result = 0;
+    long base = 1; 
+
+    for (int i = len -1; i >= 0; i--) {
+        int value = bin[i];
+        value -= '0';
+        result += value * base;
+        base *= 2;
+    } 
+    dec_to_hexadecimal(result);
 
 }
 
@@ -225,7 +307,7 @@ int main() {
             continue;
     }
         // Try to parse integer
-        if (sscanf(line, " %d %s", &selection, &extra) == 1 && selection >= 1 && selection <=6) {
+        if (sscanf(line, " %d %c", &selection, &extra) == 1 && selection >= 1 && selection <=6) {
             break; // success
         }
         //failed to parse a proper selection
@@ -295,25 +377,46 @@ int main() {
 
     case 4: {
         clear_screen();
+        char hex_input[100];
 
         // Print hex to decimal menu
         print_menu("Hexadecimal", "Decimal");
+        get_hex_input(hex_input, "Hexadecimal", "Decimal");
+        clear_screen();
+        // Print result menu
+        print_result("Hexadecimal", "Decimal", hex_input);
+        hex_to_decimal(hex_input);
+        printf("--------------------------------\n");
         break;
     }
 
     case 5: {
         clear_screen();
+        char bin_input[100];
 
         // Print binary to decimal menu
         print_menu("Binary", "Decimal");
+        get_bin_input(bin_input, "Binary", "Decimal");
+        clear_screen();
+        // Print result menu
+        print_result("Binary", "Decimal", bin_input);
+        binary_to_decimal(bin_input);
+        printf("--------------------------------\n");
         break;
     }
 
     case 6: {
         clear_screen();
+        char bin_input[100];
 
-        // Print decimal to hex menu
+        // Print binary to hex menu
         print_menu("Binary", "Hexadecimal");
+        get_bin_input(bin_input, "Binary", "Hexadecimal");
+        clear_screen();
+        // Print result menu
+        print_result("Binary", "Hexadecimal", bin_input);
+        binary_to_hex(bin_input);
+        printf("--------------------------------\n");
         break;
     }
 
